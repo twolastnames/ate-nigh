@@ -1,0 +1,33 @@
+/*****************************************************
+* DO NOT MODIFY THIS!!!
+* Edit the schemas.json file at the base of the project
+* then run "npm run dbschema" to regenerate this
+*****************************************************/
+
+//import type { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+<% for(const type of types) { %><%= type %>Type,<% } %>
+} from "../../../types/db"
+
+import {
+<% for(const model of Object.keys(schemas.collections)) { %><%= model %>,<% } %>
+} from "../../../util/db"
+/* eslint-enable @typescript-eslint/no-unused-vars */
+
+<%   if(aggregation) { %>
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function GET(request: Request) {
+  return NextResponse.json(await <%= aggregation.model %>.aggregate(<%- JSON.stringify(aggregation.pipeline) %>))
+}
+<%   } %>
+
+<%   if(collection) { %>
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function POST(request: Request) {
+  const model = new <%= path %>(await request.json())
+  model.save()
+}
+<%   } %>

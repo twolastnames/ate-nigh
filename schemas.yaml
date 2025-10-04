@@ -1,0 +1,44 @@
+aggregations:
+- name: Food
+  model: Food
+  response: Food
+  parameters:
+    id:
+      type: string
+      format: number
+      required: true
+  result:
+    food:
+      type: Food
+      required: true
+  pipeline:
+  - $match:
+#      persistantId: $data-an-id
+      persistantId: 2705383
+types:
+  Nutrient:
+    persistantId:
+      type: Number
+      required: true
+    name:
+      type: String
+      required: true
+    units:
+      type: String
+      required: true
+    amount:
+      type: Number
+      required: true
+collections:
+  Food:
+    persistantId:
+      type: Number
+      index: true
+      unique: true
+      required: true
+    description:
+      type: String
+      required: true
+    nutrients:
+      type:
+        - Nutrient

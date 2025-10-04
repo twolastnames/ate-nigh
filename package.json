@@ -2,26 +2,39 @@
   "name": "ate-nigh",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "format": "eslint && prettier --write ."
+    "db": "sudo docker compose up",
+    "dbschema": "node --experimental-specifier-resolution=node --loader ts-node/esm  ./bin/generate.ts && npm run format",
+    "format": "eslint && prettier --write .",
+    "importFoods": "node --experimental-specifier-resolution=node --loader ts-node/esm ./bin/loadFoods.ts --project tsconfig.json"
   },
   "dependencies": {
+    "@types/mongodb": "^4.0.6",
+    "@types/mongoose": "^5.11.96",
+    "mongodb": "^6.19.0",
+    "mongoose": "^8.18.1",
     "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/ejs": "^3.1.5",
+    "@types/jsonschema": "^0.0.5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "ejs": "^3.1.10",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
     "prettier": "^3.6.2",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5",
+    "yaml": "^2.8.1"
   }
 }

@@ -1,0 +1,41 @@
+/*****************************************************
+* DO NOT MODIFY THIS!!!
+* Edit the schemas.json file at the base of the project
+* then run "npm run dbschema" to regenerate this
+*****************************************************/
+<%
+const makeTypes = (schema) => JSON.stringify(schema).replaceAll(
+        /"type":"([^"]+)"/g, "type:$1"
+    ).replaceAll(
+        /"type":\["([^"]+)"\]/g, "type:[$1]"
+    )
+%>
+import  mongoose, { Schema } from "mongoose";
+import { <%=
+    Object.keys(collections).map(
+        (type) => `${type}Type`
+    ).join(",") %> } from "../types/db"
+
+const uri = process.env.AN_DBURL || "mongodb://127.0.0.1:27017/an_test";
+if(!uri) {
+    console.error("need to set environment variable AN_DBURL with mongodb uri")
+    process.exit(1)
+}
+
+mongoose.connect(uri);
+
+<% for(const [name, schema] of Object.entries(types)) { %>
+    const <%= name %> = <%- makeTypes(schema) %>
+<% } %>
+<% for(const [name, schema] of Object.entries(collections)) { %>
+
+export const <%= name %>Schema = <%- makeTypes(schema) %>;
+
+export const <%= name %> = mongoose.models.<%= name %> || mongoose.model< <%= name %>Type >(
+    "<%= name %>",new Schema< <%= name %>Type >(
+    <%= name %>Schema
+))
+
+<% } %>
+
+
