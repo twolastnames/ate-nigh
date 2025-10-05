@@ -26,11 +26,13 @@ writeFileSync("./util/db.ts", ejs.render(modelsTemplate, schemas));
 for(const path of paths) {
     const name = path.uncapitalize()
     const collection = schemas.collections[path]
-    const aggregation = schemas.aggregations.find(({name} : {name:string}) => name ===path)
+    const aggregation = schemas.aggregations.find(({name} : {name:string}) => name===path)
+    const backPath = path.split('/').map(() => '../').join('')
     mkdirSync(`./app/api/${name}`, {recursive: true})
     writeFileSync(`./app/api/${name}/route.ts`, ejs.render(readFileSync(
         './templates/route.ts.ejs').toString(), {
             path,
+            backPath,
             types,
             schemas,
             aggregation,
