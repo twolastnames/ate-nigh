@@ -2,6 +2,7 @@ aggregations:
 - name: Food
   model: Food
   response: Food
+  finalizer: haveOne
   parameters:
     id:
       type: string
@@ -20,6 +21,7 @@ aggregations:
             type: string
             format: number
             required: true
+  - $limit: 1
 #      persistantId: $data-an-id
 #      persistantId: 2705383
 types:

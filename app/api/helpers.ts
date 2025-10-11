@@ -1,4 +1,5 @@
-import { NextRequest } from "next/server";
+import { Model } from "mongoose";
+import { NextRequest, NextResponse } from "next/server";
 
 export type ParameterError = {
     name: string;
@@ -53,7 +54,7 @@ export function substitutePipelineParameters(request: NextRequest, pipeline: Arr
 }
 
 /*
-export async function doRouteGet<BASE, RESPONSE>(
+export async function doRoutePost<BASE, RESPONSE>(
     base: BASE , pipeline: any,
     request: Request, result: NextResponse
 ) : RESPONSE {
@@ -62,10 +63,18 @@ export async function doRouteGet<BASE, RESPONSE>(
 }
 */
 
-export function doRoutePost<BASE>(
+export async function doRouteGet<BASE extends Model<any>>(
     base: BASE, definition: any,
-    request: Request, result: NextResponse
-) : Response {
-    
+    request: NextRequest,
+    finalizer: (data: any[]) => NextResponse
+) : Promise<NextResponse> {
+  try {
+    return finalizer(await base.aggregate(substitutePipelineParameters(
+      request,
+      definition
+    )))
+  } catch(e : any) {
+    return NextResponse.json({error: e.message}, {status: 400})
+  }
 }
 

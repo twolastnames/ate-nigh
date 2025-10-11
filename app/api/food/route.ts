@@ -6,7 +6,8 @@
 
 //import type { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
-import { substitutePipelineParameters } from "../helpers"
+import { doRouteGet } from "../helpers"
+import * as finalizers from "../finalizers"
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
@@ -21,14 +22,12 @@ Food,
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(request: NextRequest) {
-  try {
-    return NextResponse.json(await Food.aggregate(substitutePipelineParameters(
-      request,
-      [{"$match":{"persistantId":{"anParameter":{"name":"id","schema":{"type":"string","format":"number","required":true}}}}}]
-    )))
-  } catch(e : any) {
-    return NextResponse.json({error: e.message}, {status: 400})
-  }
+  return doRouteGet(
+    Food,
+    [{"$match":{"persistantId":{"anParameter":{"name":"id","schema":{"type":"string","format":"number","required":true}}}}},{"$limit":1}],
+    request,
+    finalizers.haveOne
+  )
 }
 
 
