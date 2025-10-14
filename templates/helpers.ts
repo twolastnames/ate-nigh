@@ -1,7 +1,10 @@
 import { Aggregate } from "mongoose";
+import { markCurrentScopeAsDynamic } from "next/dist/server/app-render/dynamic-rendering";
 
 const typeMaps: { [arg: string]: string } = {
+  'string': "string",
   String: "string",
+  'number': "number",
   Number: "number",
   Boolean: "boolean",
 };
@@ -33,4 +36,28 @@ export function dumpTypescriptSchema(schema: any): any {
       .join("");
   }
   return typeMaps[schema] || schema;
+}
+
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
+function getArgumentsSchema(aggregation: any) : any {
+  if (Array.isArray(aggregation) || Array.isArray(aggregation.type)) {
+    return aggregation.reduce((current: any, next: any) => ({
+      ...current,
+      ...getArgumentsSchema(next),
+    }), {})
+  } else if (typeof aggregation == "object" && aggregation.anParameter) {
+    const {name, schema} = aggregation.anParameter;
+    return {[name]: schema}
+  } else if (typeof aggregation == "object") {
+    return Object.values(aggregation).reduce((current: any, next: any) => ({
+      ...current,
+      ...getArgumentsSchema(next),
+    }), {})
+  } else {
+    return {}
+  }
+}
+
+export function dumpParametersTypescript(aggregation: any) : string{
+  return dumpTypescriptSchema(getArgumentsSchema(aggregation)).trim()
 }

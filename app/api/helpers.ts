@@ -53,16 +53,6 @@ export function substitutePipelineParameters(request: NextRequest, pipeline: Arr
     return pipeline.map((operation: any) => substituteOperation(request, operation))
 }
 
-/*
-export async function doRoutePost<BASE, RESPONSE>(
-    base: BASE , pipeline: any,
-    request: Request, result: NextResponse
-) : RESPONSE {
-  return NextResponse.json(await base.aggregate(pipeline))
-    
-}
-*/
-
 export async function doRouteGet<BASE extends Model<any>>(
     base: BASE, definition: any,
     request: NextRequest,

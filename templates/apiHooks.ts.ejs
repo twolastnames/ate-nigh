@@ -1,0 +1,29 @@
+/*****************************************************
+* DO NOT MODIFY THIS!!!
+* Edit the schemas.json file at the base of the project
+* then run "npm run dbschema" to regenerate this
+*****************************************************/
+
+import { useBaseGet } from "./helpers"
+import { GetResponse } from "./helpersTypes"
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+<% for(const type of types) { %><%= type %>Type,<% } %>
+} from "../types/db"
+
+import {
+<% for(const model of Object.keys(schemas.collections)) { %><%= model %>,<% } %>
+} from "../util/db"
+/* eslint-enable @typescript-eslint/no-unused-vars */
+
+<%   for(const aggregation of schemas.aggregations) { %>
+export type <%= aggregation.name %>ResponseType = <%- dumpTypescriptSchema(aggregation.response)%>
+export function use<%= 
+    aggregation.name
+  %>Get(parameters: {
+        <%- dumpParametersTypescript(aggregation.pipeline) %>
+    }) : GetResponse< <%= aggregation.name %>ResponseType%> > {
+  return useBaseGet('/api/<%= aggregation.name.uncapitalize() %>', parameters)
+}
+<% } %>

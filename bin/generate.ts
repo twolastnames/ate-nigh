@@ -1,10 +1,9 @@
 import ejs from "ejs";
 import YAML from "yaml";
 import "../util/extensions"
-import { dumpTypescriptSchema } from "../templates/helpers";
+import { dumpTypescriptSchema, dumpParametersTypescript } from "../templates/helpers";
 
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
-import { queryObjects } from "v8";
 
 const typesTemplate = readFileSync("./types/db.ts.ejs").toString();
 const modelsTemplate = readFileSync("./util/db.ts.ejs").toString();
@@ -36,30 +35,16 @@ for(const path of paths) {
             types,
             schemas,
             aggregation,
+            name,
             collection,
         }));
 }
 
-/*
-const typeMaps = {
-    String: 'string',
-    Number: 'number',
-    Boolean: 'boolean',
-}
-
-
-const dumpTypescriptSchema = (schema) => {
-    if(Array.isArray(schema) || Array.isArray(schema.type)) {
-        const added = dumpTypescriptSchema((schema.type || schema)[0])
-        return `Array<${added}${schema.type ? 'Type' : ''}>`
-    } else if(typeof schema == "object" && !!schema.type) {
-        const end = schema.required == false ? "| undefined" : "";
-        return `${typeMaps[schema.type] || `${schema.type}Type`} ${end}`;
-    } else if(typeof schema == "object") {
-        return Object.entries(schema).map(
-            ([name, schema]) => `${name}:${dumpTypescriptSchema(schema)};\n`
-        ).join('')
-    }
-    return typeMaps[schema] || schema; 
-}
-*/
+writeFileSync(`./hooks/api.ts`, ejs.render(readFileSync(
+    './templates/apiHooks.ts.ejs').toString(),
+    {
+        schemas,
+        types,
+        dumpParametersTypescript,
+        dumpTypescriptSchema,
+    }))

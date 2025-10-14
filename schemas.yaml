@@ -1,24 +1,17 @@
 aggregations:
 - name: Food
   model: Food
-  response: Food
+  response:
+    type: Food
+    require: true
   finalizer: haveOne
-  parameters:
-    id:
-      type: string
-      format: number
-      required: true
-  result:
-    food:
-      type: Food
-      required: true
   pipeline:
   - $match:
       persistantId:
         anParameter:
           name: id
           schema:
-            type: string
+            type: number 
             format: number
             required: true
   - $limit: 1
