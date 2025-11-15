@@ -11,6 +11,7 @@
     "db": "sudo docker compose up",
     "dbschema": "node --experimental-specifier-resolution=node --loader ts-node/esm  ./bin/generate.ts && npm run format",
     "format": "eslint && prettier --write .",
+    "e2e": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
     "importFoods": "node --experimental-specifier-resolution=node --loader ts-node/esm ./bin/loadFoods.ts --project tsconfig.json"
   },
   "dependencies": {
@@ -33,10 +34,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cypress": "^15.5.0",
     "ejs": "^3.1.10",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
     "prettier": "^3.6.2",
+    "start-server-and-test": "^2.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5",
     "yaml": "^2.8.1"

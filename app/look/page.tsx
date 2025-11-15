@@ -8,5 +8,5 @@ const LookIn = styled(Box)({
 
 export default function Look() {
     const response= useFoodGet({id:2705385 })
-    return <LookIn>{`Look!: ${{JSON.stringify(response.data?.description || {}, null, 2)}}`}</LookIn>
+    return <LookIn>{`Look!: ${JSON.stringify(response.data?.description || {}, null, 2)}`}</LookIn>
 }
