@@ -4,6 +4,6 @@ import { Box, styled } from "@mui/material";
 const Container = styled(Box)({
 })
 
-export default function <%= name %>() {
+export default function MyTest() {
     return <Container></Container>
 }
