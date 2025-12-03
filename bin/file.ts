@@ -24,11 +24,11 @@ type OutputType = {
 
 const componentOutputs = [
     {
-        template: './templates/component/component.ts.ejs',
+        template: './templates/component/component.tsx.ejs',
         filename: '{relative}/{upName}.tsx'
     },
     {
-        template: './templates/component/test.ts.ejs',
+        template: './templates/component/test.tsx.ejs',
         filename: '{relative}/tests/snapshot.test.tsx'
     },
 ]
