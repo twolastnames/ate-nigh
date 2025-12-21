@@ -1,0 +1,11 @@
+"use client";
+
+import { testHost } from "../../cypress/helpers";
+
+describe('<%= upName %>', () => {
+    it('can look', () => {
+        cy.visit(`${testHost}/<%= downName %>`)
+        cy.contains('<%= upName %>')
+    })
+});
+

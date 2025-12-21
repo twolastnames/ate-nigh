@@ -35,6 +35,19 @@ const componentOutputs = [
 
 const fileHandlers = [
     {
+        test: new RegExp("^app"),
+        outputs: [
+            {
+                template: './templates/page/page.tsx.ejs',
+                filename: '{relative}/page.tsx'
+            },
+            {
+                template: './templates/page/cypress.tsx.ejs',
+                filename: '{relative}/{downName}.cy.tsx'
+            },
+        ],
+    },
+    {
         test: new RegExp("^components\/ui"),
         outputs: componentOutputs,
     },
@@ -92,7 +105,6 @@ process.argv.forEach(function (input, index, array) {
             for(const output of outputs) {
                 outputFile(output, context)
             }
-console.log('matches!!!', path.sep)
             return;
         }
     }
