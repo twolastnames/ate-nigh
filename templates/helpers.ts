@@ -1,16 +1,15 @@
 import { Aggregate } from "mongoose";
-import { markCurrentScopeAsDynamic } from "next/dist/server/app-render/dynamic-rendering";
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 const typeMaps: { [arg: string]: string } = {
-  'string': "string",
+  string: "string",
   String: "string",
-  'number': "number",
+  number: "number",
   Number: "number",
   Boolean: "boolean",
 };
 
 export interface Parameters {
-// eslint-disable-next-line  @typescript-eslint/no-explicit-any
   [arg: string]: any;
 }
 
@@ -18,11 +17,9 @@ export type Aggregation<RESULT_TYPE> = {
   name: string;
   model: string;
   parameters: Parameters;
-// eslint-disable-next-line  @typescript-eslint/no-explicit-any
   pipeline: Aggregate<RESULT_TYPE>;
-}
+};
 
-// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 export function dumpTypescriptSchema(schema: any): any {
   if (Array.isArray(schema) || Array.isArray(schema.type)) {
     const added = dumpTypescriptSchema((schema.type || schema)[0]);
@@ -38,26 +35,32 @@ export function dumpTypescriptSchema(schema: any): any {
   return typeMaps[schema] || schema;
 }
 
-// eslint-disable-next-line  @typescript-eslint/no-explicit-any
-function getArgumentsSchema(aggregation: any) : any {
+function getArgumentsSchema(aggregation: any): any {
   if (Array.isArray(aggregation) || Array.isArray(aggregation.type)) {
-    return aggregation.reduce((current: any, next: any) => ({
-      ...current,
-      ...getArgumentsSchema(next),
-    }), {})
+    return aggregation.reduce(
+      (current: any, next: any) => ({
+        ...current,
+        ...getArgumentsSchema(next),
+      }),
+      {},
+    );
   } else if (typeof aggregation == "object" && aggregation.anParameter) {
-    const {name, schema} = aggregation.anParameter;
-    return {[name]: schema}
+    const { name, schema } = aggregation.anParameter;
+    return { [name]: schema };
   } else if (typeof aggregation == "object") {
-    return Object.values(aggregation).reduce((current: any, next: any) => ({
-      ...current,
-      ...getArgumentsSchema(next),
-    }), {})
+    return Object.values(aggregation).reduce(
+      (current: any, next: any) => ({
+        ...current,
+        ...getArgumentsSchema(next),
+      }),
+      {},
+    );
   } else {
-    return {}
+    return {};
   }
 }
 
-export function dumpParametersTypescript(aggregation: any) : string{
-  return dumpTypescriptSchema(getArgumentsSchema(aggregation)).trim()
+export function dumpParametersTypescript(aggregation: any): string {
+  return dumpTypescriptSchema(getArgumentsSchema(aggregation)).trim();
 }
+/* eslint-enable  @typescript-eslint/no-explicit-any */

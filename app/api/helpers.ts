@@ -1,70 +1,82 @@
 import { Model } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 export type ParameterError = {
-    name: string;
-    description: string;
-}
+  name: string;
+  description: string;
+};
 
 export type SubstituteResponse = {
-    error?: ParameterError;
-    pipeline?: any[];
-}
-
+  error?: ParameterError;
+  pipeline?: any[];
+};
 
 interface Operation {
-[key: string]: any;
+  [key: string]: any;
 }
 
 const validators = {
-    'number': {
-        validate: (value: any) => !isNaN(Number(value)),
-        unmarshal: (value: any) => Number(value),
+  number: {
+    validate: (value: any) => !isNaN(Number(value)),
+    unmarshal: (value: any) => Number(value),
+  },
+};
+
+function substituteOperation(request: NextRequest, operation: Operation): any {
+  if (Array.isArray(operation)) {
+    return operation.map((on) => substituteOperation(request, on));
+  } else if (operation.anParameter) {
+    const parameter = operation.anParameter;
+    const value = request.nextUrl.searchParams.get(parameter.name);
+    if (value == null && parameter.schema.required) {
+      throw new Error(`required parameter ${parameter.name} not present`);
     }
-}
-
-function substituteOperation(request: NextRequest, operation: Operation) : any {
-    if(Array.isArray(operation)) {
-        return operation.map((on) => substituteOperation(request, on))
-    } else if(operation.anParameter) {
-        const parameter = operation.anParameter;
-        const value= request.nextUrl.searchParams.get(parameter.name)
-        if(value == null && parameter.schema.required) {
-            throw new Error(`required parameter ${parameter.name} not present`)
-        }
-        const validator = validators[parameter.schema.format]
-        if(!validator.validate(value)) {
-            throw new Error(`Parameter "${parameter}" not in format of ${parameter.schema.format}`)
-        }
-        return validator.unmarshal(value)
-    } else if(operation == null) {
-        return operation
-    } else if(typeof operation === 'object') {
-        return Object.entries(operation).reduce((current: any, [key, value]: [string, any]) => ({
-            ...current,
-            [key]: substituteOperation(request, value)
-        }), {})
-    } else {
-        return operation;
+    const validator = validators[parameter.schema.format];
+    if (!validator.validate(value)) {
+      throw new Error(
+        `Parameter "${parameter}" not in format of ${parameter.schema.format}`,
+      );
     }
-}
-
-export function substitutePipelineParameters(request: NextRequest, pipeline: Array<any>) : any {
-    return pipeline.map((operation: any) => substituteOperation(request, operation))
-}
-
-export async function doRouteGet<BASE extends Model<any>>(
-    base: BASE, definition: any,
-    request: NextRequest,
-    finalizer: (data: any[]) => NextResponse
-) : Promise<NextResponse> {
-  try {
-    return finalizer(await base.aggregate(substitutePipelineParameters(
-      request,
-      definition
-    )))
-  } catch(e : any) {
-    return NextResponse.json({error: e.message}, {status: 400})
+    return validator.unmarshal(value);
+  } else if (operation == null) {
+    return operation;
+  } else if (typeof operation === "object") {
+    return Object.entries(operation).reduce(
+      (current: any, [key, value]: [string, any]) => ({
+        ...current,
+        [key]: substituteOperation(request, value),
+      }),
+      {},
+    );
+  } else {
+    return operation;
   }
 }
 
+export function substitutePipelineParameters(
+  request: NextRequest,
+  pipeline: Array<any>,
+): any {
+  return pipeline.map((operation: any) =>
+    substituteOperation(request, operation),
+  );
+}
+
+export async function doRouteGet<BASE extends Model<any>>(
+  base: BASE,
+  definition: any,
+  request: NextRequest,
+  finalizer: (data: any[]) => NextResponse,
+): Promise<NextResponse> {
+  try {
+    return finalizer(
+      await base.aggregate(substitutePipelineParameters(request, definition)),
+    );
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message }, { status: 400 });
+  }
+}
+
+/* eslint-enable  @typescript-eslint/no-explicit-any */

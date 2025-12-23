@@ -61,7 +61,12 @@
       "@testing-library/jest-dom/extend-expect"
     ],
     "transform": {
-      "^.+\\.[t|j]sx?$": ["babel-jest", {"configFile" : "./babelConfig.json"}]
+      "^.+\\.[t|j]sx?$": [
+        "babel-jest",
+        {
+          "configFile": "./babelConfig.json"
+        }
+      ]
     }
   }
 }
