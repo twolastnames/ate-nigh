@@ -26,6 +26,10 @@ type OutputType = {
 
 const componentOutputs = [
   {
+    template: "./templates/component/types.tsx.ejs",
+    filename: "{relative}/{upName}Types.tsx",
+  },
+  {
     template: "./templates/component/component.tsx.ejs",
     filename: "{relative}/{upName}.tsx",
   },
@@ -54,7 +58,7 @@ const fileHandlers = [
     outputs: componentOutputs,
   },
   {
-    test: new RegExp("^components\/features"),
+    test: new RegExp("^components\/feature"),
     outputs: componentOutputs,
   },
 ];

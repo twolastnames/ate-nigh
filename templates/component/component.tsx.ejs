@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 import { Box, styled } from "@mui/material";
+import { <%= upName %>Types } from "./<%= upName %>Types";
 
 const Container = styled(Box)({
 })
 
-export function <%= upName %>() {
+export function <%= upName %>(props: <%= upName %>Types) {
     return <Container data-testid="<%= upName %>"></Container>
 }
