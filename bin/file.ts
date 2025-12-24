@@ -11,6 +11,7 @@ if (process.argv.length < 3) {
 }
 
 type ContextType = {
+  backDots: string;
   input: string;
   directory: string;
   relative: string;
@@ -86,13 +87,26 @@ const outputFile = (output: OutputType, context: ContextType) => {
   writeFileSync(name, ejs.render(template, context));
 };
 
+function getLastName(full: string) {
+  const parts = full.split(path.sep)
+  parts.reverse()
+  for(const part of parts) {
+    if(part[0] !== '[') {
+      return part
+    }
+  }
+  return parts[0]
+}
+
 function getContext(input: string): ContextType {
   const __filename = fileURLToPath(import.meta.url);
-  const dirname = path.normalize(path.dirname(__filename) + "/..");
-  const lastName = path.basename(input);
+  const lastName = getLastName(input);
+  const directory= path.normalize(path.dirname(__filename) + "/..");
+  const backDots = input.split(path.sep).map(() => '..').join(path.sep)
   return {
-    directory: dirname,
-    relative: path.relative(dirname, input),
+    backDots,
+    directory,
+    relative: path.relative(directory, input),
     lastName,
     downName: lastName.charAt(0).toLowerCase() + lastName.slice(1),
     upName: lastName.charAt(0).toUpperCase() + lastName.slice(1),
