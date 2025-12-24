@@ -2,10 +2,10 @@
 
 import { testHost } from "../../cypress/helpers";
 
-describe('<%= upName %>', () => {
+describe('<%= downName %>', () => {
     it('can look', () => {
         cy.visit(`${testHost}/<%= downName %>`)
-        cy.contains('<%= upName %>')
+        cy.contains('<%= downName %>')
     })
 });
 
