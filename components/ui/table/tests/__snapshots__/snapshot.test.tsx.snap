@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`work 1`] = `
+<div
+  class="MuiBox-root css-1u8qly9"
+  data-testid="Table"
+>
+  <div
+    class="MuiBox-root css-1u8qly9"
+  >
+    My Data
+  </div>
+  <table
+    class="MuiTable-root css-1xwxv7r-MuiTable-root"
+  >
+    <thead
+      class="MuiTableHead-root css-1a7iywq-MuiTableHead-root"
+    >
+      <tr
+        class="MuiTableRow-root MuiTableRow-head css-1xtozoh-MuiTableRow-root"
+      >
+        <th
+          class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+          scope="col"
+        >
+          header1
+        </th>
+        <th
+          class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+          scope="col"
+        >
+          header2
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      class="MuiTableBody-root css-gmh7jj-MuiTableBody-root"
+    >
+      <tr
+        class="MuiTableRow-root css-1xtozoh-MuiTableRow-root"
+      >
+        <td
+          class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+        >
+          data11
+        </td>
+        <td
+          class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+        >
+          data12
+        </td>
+      </tr>
+      <tr
+        class="MuiTableRow-root css-1xtozoh-MuiTableRow-root"
+      >
+        <td
+          class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+        >
+          data21
+        </td>
+        <td
+          class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+        >
+          data22
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
