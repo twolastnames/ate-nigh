@@ -4,9 +4,12 @@ export enum Stage {
   ERROR,
 }
 
-export type GetResponse<PAYLOAD> = {
+export type GetResponseInformation = {
   code?: number;
   stage: Stage;
-  data?: PAYLOAD;
   error?: string;
+};
+
+export type GetResponse<PAYLOAD> = GetResponseInformation & {
+  data?: PAYLOAD;
 };
