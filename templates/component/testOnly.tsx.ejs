@@ -1,0 +1,9 @@
+"use client"
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { <%= preTests %> } from "../<%= preTests %>"
+
+test('<%= downName %>', () => {
+    render(< <%= preTests %> />)
+    expect(screen.getByTestId("<%= preTests %>")).toMatchSnapshot()
+});

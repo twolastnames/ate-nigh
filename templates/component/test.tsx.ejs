@@ -3,7 +3,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { <%= upName %> } from "../<%= upName %>"
 
-test('work', () => {
+test('<%= upName %>', () => {
     render(< <%= upName %> />)
     expect(screen.getByTestId("<%= upName %>")).toMatchSnapshot()
 });

@@ -18,6 +18,7 @@ type ContextType = {
   downName: string;
   upName: string;
   lastName: string;
+  preTests: string;
 };
 
 type OutputType = {
@@ -55,6 +56,24 @@ const fileHandlers = [
     ],
   },
   {
+    test: new RegExp("^components\/ui\/[^\/]+\/tests\/[^\/]+"),
+    outputs: [
+      {
+        template: "./templates/component/testOnly.tsx.ejs",
+        filename: "{relative}/../{downName}.test.tsx",
+      },
+    ],
+  },
+  {
+    test: new RegExp("^components\/feature\/[^\/]+\/tests\/[^\/]+"),
+    outputs: [
+      {
+        template: "./templates/component/testOnly.tsx.ejs",
+        filename: "{relative}/../{downName}.test.tsx",
+      },
+    ],
+  },
+  {
     test: new RegExp("^components\/ui"),
     outputs: componentOutputs,
   },
@@ -65,12 +84,12 @@ const fileHandlers = [
 ];
 
 const outputFile = (output: OutputType, context: ContextType) => {
-  const name = Object.entries(context)
+  const name = path.resolve(Object.entries(context)
     .reduce(
       (current, [key, value]) => current.replaceAll(`{${key}}`, value),
       output.filename,
     )
-    .replaceAll("/", path.sep);
+    .replaceAll("/", path.sep));
   const directory = path.dirname(name);
   if (!fs.existsSync(directory)) {
     console.log(`generating directory "${directory}"`);
@@ -106,9 +125,29 @@ function getContext(input: string): ContextType {
     .split(path.sep)
     .map(() => "..")
     .join(path.sep);
+  const preTestsSeen: { preTests: string | null } = input
+    .split(path.sep)
+    .reduce(
+      (
+        { seen, preTests }: { preTests: string | null; seen: boolean },
+        next: string,
+      ) => {
+        if (next === "tests") {
+          return { preTests, seen: true };
+        } else if (seen) return { preTests, seen };
+        else {
+          return {
+            preTests: next.charAt(0).toUpperCase() + next.slice(1),
+            seen,
+          };
+        }
+      },
+      { preTests: null, seen: false },
+    );
   return {
     backDots,
     directory,
+    preTests: preTestsSeen.preTests || "",
     relative: path.relative(directory, input),
     lastName,
     downName: lastName.charAt(0).toLowerCase() + lastName.slice(1),
@@ -131,6 +170,7 @@ process.argv.forEach(function (input, index) {
   console.log("context:\n", dumpContext(context));
   for (const { test, outputs } of fileHandlers) {
     if (test.test(context.relative)) {
+      console.log("matched: ", test);
       for (const output of outputs) {
         outputFile(output, context);
       }
