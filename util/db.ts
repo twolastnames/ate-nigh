@@ -6,14 +6,9 @@
 
 import mongoose, { Schema } from "mongoose";
 import { FoodType } from "../types/db";
+import { dbUri } from "./helpers";
 
-const uri = process.env.AN_DBURL || "mongodb://127.0.0.1:27017/an_test";
-if (!uri) {
-  console.error("need to set environment variable AN_DBURL with mongodb uri");
-  process.exit(1);
-}
-
-mongoose.connect(uri);
+mongoose.connect(dbUri);
 
 const Nutrient = {
   persistantId: { type: Number, required: true },
@@ -29,5 +24,5 @@ export const FoodSchema = {
 };
 
 export const Food =
-  mongoose.models.Food ||
+  db.models.Food ||
   mongoose.model<FoodType>("Food", new Schema<FoodType>(FoodSchema));

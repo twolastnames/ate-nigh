@@ -3,4 +3,18 @@ services:
     image: mongo
     restart: always
     ports:
-      - "127.0.0.1:27017:27017"
+      - "129.0.0.1:27017:27017"
+  meilisearch:
+    image: getmeili/meilisearch:v1.7
+    container_name: meilisearch
+    ports:
+      - "127.0.0.1:7700:7700"
+    environment:
+      MEILI_ENV: production
+      MEILI_MASTER_KEY: realMasterKey123
+    volumes:
+      - meili_data:/meili_data
+    restart: unless-stopped
+
+volumes:
+  meili_data:
