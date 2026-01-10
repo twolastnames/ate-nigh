@@ -19,7 +19,7 @@ export function Spinner(props: SpinnerTypes) {
     (response) => response.stage === Stage.FETCHING,
   );
   if (fetching) {
-    return <CircularProgress data-testid="Fetching"/>;
+    return <CircularProgress data-testid="Fetching" />;
   }
   return props.children;
 }
