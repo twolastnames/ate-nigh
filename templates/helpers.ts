@@ -2,6 +2,8 @@ import { Aggregate } from "mongoose";
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 const typeMaps: { [arg: string]: string } = {
+  object: "object",
+  Object: "object",
   string: "string",
   String: "string",
   number: "number",
