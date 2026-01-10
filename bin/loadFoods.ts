@@ -1,3 +1,4 @@
+import { descriptionIndex } from "../util/helpers";
 import { Food } from "../util/db";
 import { readFileSync } from "fs";
 
@@ -11,6 +12,12 @@ import { readFileSync } from "fs";
     const food = new Food();
     food.persistantId = surveyed.fdcId;
     food.description = surveyed.description;
+    descriptionIndex.addDocuments([
+      {
+        id: food.persistantId,
+        description: food.description,
+      },
+    ]);
     food.nutrients = surveyed.foodNutrients
       .filter(({ amount }: { amount: number }) => amount > 0)
       .map(

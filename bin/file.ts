@@ -56,6 +56,19 @@ const fileHandlers = [
     ],
   },
   {
+    test: new RegExp("^hooks/.+"),
+    outputs: [
+      {
+        template: "./templates/hook/hook.ts.ejs",
+        filename: "{relative}/../{downName}.ts",
+      },
+      {
+        template: "./templates/hook/hookTypes.ts.ejs",
+        filename: "{relative}/../{downName}Types.ts",
+      },
+    ],
+  },
+  {
     test: new RegExp("^components\/ui\/[^\/]+\/tests\/[^\/]+"),
     outputs: [
       {
@@ -84,12 +97,14 @@ const fileHandlers = [
 ];
 
 const outputFile = (output: OutputType, context: ContextType) => {
-  const name = path.resolve(Object.entries(context)
-    .reduce(
-      (current, [key, value]) => current.replaceAll(`{${key}}`, value),
-      output.filename,
-    )
-    .replaceAll("/", path.sep));
+  const name = path.resolve(
+    Object.entries(context)
+      .reduce(
+        (current, [key, value]) => current.replaceAll(`{${key}}`, value),
+        output.filename,
+      )
+      .replaceAll("/", path.sep),
+  );
   const directory = path.dirname(name);
   if (!fs.existsSync(directory)) {
     console.log(`generating directory "${directory}"`);
