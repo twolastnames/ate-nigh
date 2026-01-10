@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function raw(response: any[]) {
+  return NextResponse.json({
+    data: response,
+  });
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function haveOne(response: any[]) {
   if (response.length !== 1) {
     return NextResponse.json(
