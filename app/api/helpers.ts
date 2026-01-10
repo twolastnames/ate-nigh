@@ -18,6 +18,10 @@ interface Operation {
 }
 
 const validators = {
+  string: {
+    validate: (value: any) => value != null,
+    unmarshal: (value: any) => value.toString(),
+  },
   number: {
     validate: (value: any) => !isNaN(Number(value)),
     unmarshal: (value: any) => Number(value),
@@ -33,11 +37,12 @@ function substituteOperation(request: NextRequest, operation: Operation): any {
     if (value == null && parameter.schema.required) {
       throw new Error(`required parameter ${parameter.name} not present`);
     }
-    const validator = validators[parameter.schema.format];
+    const entity = (
+      parameter.schema.format || parameter.schema.type
+    ).toLowerCase();
+    const validator = validators[entity];
     if (!validator.validate(value)) {
-      throw new Error(
-        `Parameter "${parameter}" not in format of ${parameter.schema.format}`,
-      );
+      throw new Error(`Parameter "${parameter}" not in format of ${entity}`);
     }
     return validator.unmarshal(value);
   } else if (operation == null) {
