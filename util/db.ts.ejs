@@ -27,7 +27,7 @@ mongoose.connect(dbUri);
 
 export const <%= name %>Schema = <%- makeTypes(schema) %>;
 
-export const <%= name %> = db.models.<%= name %> || mongoose.model< <%= name %>Type >(
+export const <%= name %> = mongoose.models.<%= name %> || mongoose.model< <%= name %>Type >(
     "<%= name %>",new Schema< <%= name %>Type >(
     <%= name %>Schema
 ))

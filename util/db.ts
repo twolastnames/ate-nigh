@@ -24,5 +24,5 @@ export const FoodSchema = {
 };
 
 export const Food =
-  db.models.Food ||
+  mongoose.models.Food ||
   mongoose.model<FoodType>("Food", new Schema<FoodType>(FoodSchema));
