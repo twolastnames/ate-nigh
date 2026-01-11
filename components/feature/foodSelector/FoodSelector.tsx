@@ -21,6 +21,12 @@ export function FoodSelector(props: FoodSelectorTypes) {
             id,
           })) || []
         }
+        onChange={(event, selection) => {
+          if (!selection?.id) {
+            return;
+          }
+          props.onChange(selection.id);
+        }}
         renderInput={(params) => {
           if ((params.inputProps?.value?.toString() || "").length > 2) {
             changeQuery(params.inputProps?.value?.toString() || "");
