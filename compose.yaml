@@ -3,7 +3,7 @@ services:
     image: mongo
     restart: always
     ports:
-      - "129.0.0.1:27017:27017"
+      - "127.0.0.1:27017:27017"
   meilisearch:
     image: getmeili/meilisearch:v1.7
     container_name: meilisearch
