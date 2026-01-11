@@ -1,13 +1,24 @@
 "use client";
+import { FoodDescription } from "@/components/feature/foodDescription/FoodDescription";
 import { FoodSelector } from "@/components/feature/foodSelector/FoodSelector";
-import { Box, styled } from "@mui/material";
+import { section } from "@/components/styles";
+import { Box, Stack, styled } from "@mui/material";
+import { useState } from "react";
 
 const Container = styled(Box)({});
 
 export default function Eat() {
+  const [id, setId] = useState<number | null>(null);
   return (
     <Container>
-      <FoodSelector />
+      <Stack spacing={8}>
+        <FoodSelector onChange={setId} />
+        {id && (
+          <Box sx={section}>
+            <FoodDescription id={id} />
+          </Box>
+        )}
+      </Stack>
     </Container>
   );
 }
