@@ -38,6 +38,6 @@ export function useBaseGet<PAYLOAD, ARGS extends { [arg: string]: Stringable }>(
         stage: getStage(response.status),
       });
     })();
-  }, [args, path]);
+  }, [JSON.stringify(args), path]);
   return state;
 }
