@@ -38,6 +38,7 @@ export function useBaseGet<PAYLOAD, ARGS extends { [arg: string]: Stringable }>(
         stage: getStage(response.status),
       });
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(args), path]);
   return state;
 }

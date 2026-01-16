@@ -6,7 +6,6 @@ import { useDescriptionSearch } from "../../../hooks/descriptionSearch";
 
 const Container = styled(Box)({});
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function FoodSelector(props: FoodSelectorTypes) {
   const [query, setQuery] = useState<string>("");
   const response = useDescriptionSearch({ query });
