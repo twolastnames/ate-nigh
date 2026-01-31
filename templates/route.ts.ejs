@@ -4,7 +4,7 @@
 * then run "npm run dbschema" to regenerate this
 *****************************************************/
 
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { doRouteGet } from "<%= backPath %>helpers"
 import * as finalizers from "<%= backPath %>finalizers"
 
@@ -31,7 +31,13 @@ export async function GET(request: NextRequest) {
 
 <%   if(collection) { %>
 export async function POST(request: NextRequest) {
-  const model = new <%= path %>(await request.json())
-  model.save()
+  try {
+    const model = new <%= path %>(await request.json())
+    const result = await model.save();
+    return new NextResponse(JSON.stringify({id: result?._id?.toString()}))
+  } catch (e) {
+    return new NextResponse(JSON.stringify(e), {status: 400})
+  }
 }
 <%   } %>
+

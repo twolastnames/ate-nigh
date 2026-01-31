@@ -4,14 +4,14 @@
  * then run "npm run dbschema" to regenerate this
  *****************************************************/
 
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { doRouteGet } from "../helpers";
 import * as finalizers from "../finalizers";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NutrientType, FoodType } from "../../../types/db";
+import { NutrientType, AteType, FoodType } from "../../../types/db";
 
-import { Food } from "../../../util/db";
+import { Ate, Food } from "../../../util/db";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 
 export async function GET(request: NextRequest) {
@@ -36,6 +36,11 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const model = new Food(await request.json());
-  model.save();
+  try {
+    const model = new Food(await request.json());
+    const result = await model.save();
+    return new NextResponse(JSON.stringify({ id: result?._id?.toString() }));
+  } catch (e) {
+    return new NextResponse(JSON.stringify(e), { status: 400 });
+  }
 }

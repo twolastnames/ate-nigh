@@ -4,8 +4,8 @@
 * then run "npm run dbschema" to regenerate this
 *****************************************************/
 
-import { useBaseGet } from "./helpers"
-import { GetResponse } from "./helpersTypes"
+import { useBaseGet, useBasePost } from "./helpers"
+import { GetResponse, PostResponse } from "./helpersTypes"
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
@@ -25,5 +25,11 @@ export function use<%=
         <%- dumpParametersTypescript(aggregation.pipeline) %>
     }) : GetResponse< <%= aggregation.name %>ResponseType%> > {
   return useBaseGet('/api/<%= aggregation.name.uncapitalize() %>', parameters)
+}
+
+export function use<%= 
+  aggregation.name
+%>Post() : PostResponse< <%= aggregation.name %>ResponseType%> > {
+  return useBasePost('/api/<%= aggregation.name.uncapitalize() %>')
 }
 <% } %>
