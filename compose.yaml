@@ -4,6 +4,8 @@ services:
     restart: always
     ports:
       - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo_data:/data/db
   meilisearch:
     image: getmeili/meilisearch:v1.7
     container_name: meilisearch
@@ -17,4 +19,5 @@ services:
     restart: unless-stopped
 
 volumes:
+  mongo_data:
   meili_data:
