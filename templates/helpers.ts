@@ -4,6 +4,8 @@ import { Aggregate } from "mongoose";
 const typeMaps: { [arg: string]: string } = {
   object: "object",
   Object: "object",
+  date: "Date",
+  Date: "Date",
   string: "string",
   String: "string",
   number: "number",
