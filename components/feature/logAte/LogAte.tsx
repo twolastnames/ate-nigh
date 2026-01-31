@@ -4,17 +4,16 @@ import { Box, InputAdornment, Stack, styled, TextField } from "@mui/material";
 import { LogAteTypes } from "./LogAteTypes";
 import { spreadStack } from "@/components/styles";
 import { Submit } from "@/components/ui/submit/Submit";
+import { useAtePost } from "@/hooks/api";
+import { ounces } from "@/util/units";
+import { Stage } from "@/hooks/helpersTypes";
 
 const Container = styled(Box)({});
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function LogAte(props: LogAteTypes) {
+  const { post, stage } = useAtePost();
   const [amount, setAmount] = useState<string | undefined>();
   const error = !!amount && isNaN(Number(amount));
-  const post = () => {
-    console.log("posteddddd");
-  };
-  console.log("eeee", { error, amount });
   return (
     <Container data-testid="LogAte">
       <Stack direction="row" sx={spreadStack}>
@@ -30,7 +29,18 @@ export function LogAte(props: LogAteTypes) {
             },
           }}
         />
-        {!!amount && !error && <Submit onClick={post} />}
+        {!!amount && !error && stage == Stage.IDLE && (
+          <Submit
+            onClick={() => {
+              post({
+                persistantId: Math.random(),
+                amount: ounces(Number(amount)).asGrams(),
+                nutrientId: props.id,
+                time: new Date(),
+              });
+            }}
+          />
+        )}
       </Stack>
     </Container>
   );
