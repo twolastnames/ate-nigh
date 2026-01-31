@@ -11,6 +11,10 @@ export type GetResponseInformation = {
   error?: string;
 };
 
+export type GetOptions = {
+  holdCall: () => boolean;
+};
+
 export type GetResponse<PAYLOAD> = GetResponseInformation & {
   data?: PAYLOAD;
 };

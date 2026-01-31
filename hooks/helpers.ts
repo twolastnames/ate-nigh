@@ -15,11 +15,17 @@ function getStage(code: number): Stage {
 export function useBaseGet<PAYLOAD, ARGS extends { [arg: string]: Stringable }>(
   path: string,
   args: ARGS,
+  options?: GetOptions,
 ): GetResponse<PAYLOAD> {
   const [state, setState] = useState<GetResponse<PAYLOAD>>({
     stage: Stage.IDLE,
   });
+
+  const holdCall = options?.holdCall() || false;
   useEffect(() => {
+    if (holdCall) {
+      return;
+    }
     (async () => {
       const paramaters = Object.entries(args)
         .map(
@@ -43,6 +49,6 @@ export function useBaseGet<PAYLOAD, ARGS extends { [arg: string]: Stringable }>(
       });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(args), path]);
+  }, [JSON.stringify(args), path, holdCall]);
   return state;
 }
