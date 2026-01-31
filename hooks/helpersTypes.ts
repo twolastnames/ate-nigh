@@ -1,4 +1,5 @@
 export enum Stage {
+  IDLE,
   FETCHING,
   SUCCESS,
   ERROR,

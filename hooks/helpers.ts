@@ -17,7 +17,7 @@ export function useBaseGet<PAYLOAD, ARGS extends { [arg: string]: Stringable }>(
   args: ARGS,
 ): GetResponse<PAYLOAD> {
   const [state, setState] = useState<GetResponse<PAYLOAD>>({
-    stage: Stage.FETCHING,
+    stage: Stage.IDLE,
   });
   useEffect(() => {
     (async () => {
@@ -29,6 +29,10 @@ export function useBaseGet<PAYLOAD, ARGS extends { [arg: string]: Stringable }>(
             )}`,
         )
         .join("&");
+      setState({
+        ...state,
+        stage: Stage.FETCHING,
+      });
       const response = await fetch(
         `${path}${paramaters ? "?" : ""}${paramaters}`,
       );
