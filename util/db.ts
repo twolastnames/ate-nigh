@@ -5,7 +5,7 @@
  *****************************************************/
 
 import mongoose, { Schema } from "mongoose";
-import { FoodType } from "../types/db";
+import { AteType, FoodType } from "../types/db";
 import { dbUri } from "./helpers";
 
 mongoose.connect(dbUri);
@@ -16,6 +16,17 @@ const Nutrient = {
   units: { type: String, required: true },
   amount: { type: Number, required: true },
 };
+
+export const AteSchema = {
+  persistantId: { type: Number, index: true, unique: true },
+  amount: { type: Number, required: true },
+  nutrientId: { type: Number, required: true },
+  time: { type: Date, required: true },
+};
+
+export const Ate =
+  mongoose.models.Ate ||
+  mongoose.model<AteType>("Ate", new Schema<AteType>(AteSchema));
 
 export const FoodSchema = {
   persistantId: { type: Number, index: true, unique: true, required: true },

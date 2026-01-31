@@ -15,6 +15,24 @@ aggregations:
                 format: number
                 required: true
       - $limit: 1
+
+  - name: Ate
+    model: Ate
+    response:
+      type: Ate
+      require: true
+    finalizer: haveOne
+    pipeline:
+      - $match:
+          id:
+            anParameter:
+              name: id
+              schema:
+                type: number
+                format: number
+                required: true
+      - $limit: 1
+
 #      persistantId: $data-an-id
 #      persistantId: 2705383
 types:
@@ -32,6 +50,20 @@ types:
       type: Number
       required: true
 collections:
+  Ate:
+    persistantId:
+      type: Number
+      index: true
+      unique: true
+    amount:
+      type: Number
+      required: true
+    nutrientId:
+      type: Number
+      required: true
+    time:
+      type: Date
+      required: true
   Food:
     persistantId:
       type: Number
