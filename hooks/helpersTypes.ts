@@ -18,3 +18,8 @@ export type GetOptions = {
 export type GetResponse<PAYLOAD> = GetResponseInformation & {
   data?: PAYLOAD;
 };
+
+export type PostResponse<BODY> = GetResponseInformation & {
+  post: (body: BODY) => void;
+  id?: string;
+};

@@ -1,5 +1,11 @@
 "use client";
-import { GetResponse, Stage } from "./helpersTypes";
+import {
+  GetOptions,
+  GetResponse,
+  GetResponseInformation,
+  PostResponse,
+  Stage,
+} from "./helpersTypes";
 import { useEffect, useState } from "react";
 
 type Stringable = { toString: () => string };
@@ -51,4 +57,28 @@ export function useBaseGet<PAYLOAD, ARGS extends { [arg: string]: Stringable }>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(args), path, holdCall]);
   return state;
+}
+
+export function useBasePost<BODY>(path: string): PostResponse<BODY> {
+  const [state, setState] = useState<GetResponseInformation & { id?: string }>({
+    stage: Stage.IDLE,
+  });
+  const post = async (body: BODY) => {
+    setState({
+      ...state,
+      stage: Stage.FETCHING,
+    });
+    const response = await fetch(path, {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    setState({
+      code: Number(response.status),
+      stage: getStage(response.status),
+    });
+  };
+  return {
+    ...state,
+    post,
+  };
 }
