@@ -35,6 +35,8 @@ const validators = {
 function substituteOperation(request: NextRequest, operation: Operation): any {
   if (Array.isArray(operation)) {
     return operation.map((on) => substituteOperation(request, on));
+  } else if (operation == null) {
+    return operation;
   } else if (operation.anParameter) {
     const parameter = operation.anParameter;
     const value = request.nextUrl.searchParams.get(parameter.name);
@@ -49,8 +51,6 @@ function substituteOperation(request: NextRequest, operation: Operation): any {
       throw new Error(`Parameter "${parameter}" not in format of ${entity}`);
     }
     return validator.unmarshal(value);
-  } else if (operation == null) {
-    return operation;
   } else if (typeof operation === "object") {
     return Object.entries(operation).reduce(
       (current: any, [key, value]: [string, any]) => ({

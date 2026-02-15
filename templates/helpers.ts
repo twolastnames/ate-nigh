@@ -40,7 +40,10 @@ export function dumpTypescriptSchema(schema: any): any {
 }
 
 function getArgumentsSchema(aggregation: any): any {
-  if (Array.isArray(aggregation) || Array.isArray(aggregation.type)) {
+  if (
+    Array.isArray(aggregation) ||
+    (aggregation && Array.isArray(aggregation.type))
+  ) {
     return aggregation.reduce(
       (current: any, next: any) => ({
         ...current,
@@ -48,10 +51,14 @@ function getArgumentsSchema(aggregation: any): any {
       }),
       {},
     );
-  } else if (typeof aggregation == "object" && aggregation.anParameter) {
+  } else if (
+    typeof aggregation == "object" &&
+    aggregation &&
+    aggregation.anParameter
+  ) {
     const { name, schema } = aggregation.anParameter;
     return { [name]: schema };
-  } else if (typeof aggregation == "object") {
+  } else if (typeof aggregation == "object" && aggregation) {
     return Object.values(aggregation).reduce(
       (current: any, next: any) => ({
         ...current,
