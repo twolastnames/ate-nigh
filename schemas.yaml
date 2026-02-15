@@ -33,6 +33,73 @@ aggregations:
                 required: true
       - $limit: 1
 
+  - name: Ates
+    model: Ate
+    response:
+      type: [Ate]
+      require: true
+    finalizer: raw
+    pipeline:
+      - $match:
+          time:
+            $gte:
+              anParameter:
+                name: from
+                schema:
+                  type: Date
+                  format: Date
+                  required: true
+            $lt:
+              anParameter:
+                name: to
+                schema:
+                  type: Date
+                  format: Date
+                  required: true
+
+  - name: Nutrients
+    model: Ate
+    response:
+      type: [Ate]
+      require: true
+    finalizer: raw
+    pipeline:
+      - $match:
+          time:
+            $gte:
+              anParameter:
+                name: from
+                schema:
+                  type: Date
+                  format: Date
+                  required: true
+            $lt:
+              anParameter:
+                name: to
+                schema:
+                  type: Date
+                  format: Date
+                  required: true
+      - $lookup:
+          from: foods
+          localField: foodId
+          foreignField: persistantId
+          as: food
+      - $unwind: $food
+      - $unwind: $food.nutrients
+      - $project:
+          name: $food.nutrients.name
+          units: $food.nutrients.units
+          amount: $food.nutrients.amount
+      - $group:
+          _id: $name
+          name:
+            $first: $name
+          units:
+            $first: $units
+          amount:
+            $sum: $amount
+
 #      persistantId: $data-an-id
 #      persistantId: 2705383
 types:
@@ -58,7 +125,7 @@ collections:
     amount:
       type: Number
       required: true
-    nutrientId:
+    foodId:
       type: Number
       required: true
     time:

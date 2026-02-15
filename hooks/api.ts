@@ -20,10 +20,6 @@ export function useFoodGet(parameters: {
   return useBaseGet("/api/food", parameters);
 }
 
-export function useFoodPost(): PostResponse<FoodResponseType> {
-  return useBasePost("/api/food");
-}
-
 export type AteResponseType = AteType;
 export function useAteGet(parameters: {
   id: number;
@@ -31,6 +27,26 @@ export function useAteGet(parameters: {
   return useBaseGet("/api/ate", parameters);
 }
 
+export type AtesResponseType = Array<AteType>;
+export function useAtesGet(parameters: {
+  from: Date;
+  to: Date;
+}): GetResponse<AtesResponseType> {
+  return useBaseGet("/api/ates", parameters);
+}
+
+export type NutrientsResponseType = Array<AteType>;
+export function useNutrientsGet(parameters: {
+  from: Date;
+  to: Date;
+}): GetResponse<NutrientsResponseType> {
+  return useBaseGet("/api/nutrients", parameters);
+}
+
 export function useAtePost(): PostResponse<AteResponseType> {
   return useBasePost("/api/ate");
+}
+
+export function useFoodPost(): PostResponse<FoodResponseType> {
+  return useBasePost("/api/food");
 }

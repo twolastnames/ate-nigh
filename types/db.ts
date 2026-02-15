@@ -14,7 +14,7 @@ export type NutrientType = {
 export type AteType = {
   persistantId: number;
   amount: number;
-  nutrientId: number;
+  foodId: number;
   time: Date;
 };
 

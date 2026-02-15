@@ -20,7 +20,7 @@ const Nutrient = {
 export const AteSchema = {
   persistantId: { type: Number, index: true, unique: true },
   amount: { type: Number, required: true },
-  nutrientId: { type: Number, required: true },
+  foodId: { type: Number, required: true },
   time: { type: Date, required: true },
 };
 
