@@ -35,7 +35,7 @@ export function LogAte(props: LogAteTypes) {
               post({
                 persistantId: Math.random(),
                 amount: ounces(Number(amount)).asGrams(),
-                nutrientId: props.id,
+                foodId: props.id,
                 time: new Date(),
               });
             }}
