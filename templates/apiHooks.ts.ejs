@@ -26,10 +26,12 @@ export function use<%=
     }) : GetResponse< <%= aggregation.name %>ResponseType%> > {
   return useBaseGet('/api/<%= aggregation.name.uncapitalize() %>', parameters)
 }
+<% } %>
 
-export function use<%= 
-  aggregation.name
-%>Post() : PostResponse< <%= aggregation.name %>ResponseType%> > {
-  return useBasePost('/api/<%= aggregation.name.uncapitalize() %>')
+<%   for(const collection of Object.keys(schemas.collections)) { %>
+export function use<%=
+  collection
+%>Post() : PostResponse< <%= collection %>ResponseType%> > {
+  return useBasePost('/api/<%= collection.uncapitalize() %>')
 }
 <% } %>
