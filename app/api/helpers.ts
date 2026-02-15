@@ -26,6 +26,10 @@ const validators = {
     validate: (value: any) => !isNaN(Number(value)),
     unmarshal: (value: any) => Number(value),
   },
+  date: {
+    validate: (value: any) => !Number.isNaN(new Date(value)),
+    unmarshal: (value: any) => new Date(value),
+  },
 };
 
 function substituteOperation(request: NextRequest, operation: Operation): any {
