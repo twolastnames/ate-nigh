@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export function NavigationBar() {
   return (
-    <AppBar position="static">
+    <AppBar position="static" data-testid="NavigationBar">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           Ate Nigh

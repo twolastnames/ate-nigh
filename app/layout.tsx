@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { NavigationBar } from "@/components/feature/NavigationBar/NavigationBar";
+import { NavigationBar } from "@/components/feature/navigationBar/NavigationBar";
 import { Box } from "@mui/material";
 import { paddings, Size } from "@/components/styles";
 
