@@ -1,9 +1,13 @@
-"use client"
+"use client";
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { DayPicker } from "../DayPicker"
+import { render } from "@testing-library/react";
+import { DayPicker } from "../DayPicker";
 
-test('DayPicker', () => {
-    render(< DayPicker />)
-    expect(screen.getByTestId("DayPicker")).toMatchSnapshot()
+describe("DayPicker", () => {
+  it("matches snapshot", () => {
+    const { container } = render(
+      <DayPicker value={new Date("2024-02-21")} onChange={() => {}} />,
+    );
+    expect(container).toMatchSnapshot();
+  });
 });
