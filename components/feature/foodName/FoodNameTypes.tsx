@@ -1,2 +1,3 @@
-
-export type FoodNameTypes = {}
+export type FoodNameTypes = {
+  id: number;
+};

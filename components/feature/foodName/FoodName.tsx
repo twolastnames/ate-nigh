@@ -1,11 +1,15 @@
 "use client";
 import React from "react";
-import { Box, styled } from "@mui/material";
+import { Container } from "@mui/material";
 import { FoodNameTypes } from "./FoodNameTypes";
-
-const Container = styled(Box)({
-})
+import { useFoodGet } from "@/hooks/api";
 
 export function FoodName(props: FoodNameTypes) {
-    return <Container data-testid="FoodName"></Container>
+  const response = useFoodGet({ id: props.id });
+  
+  return (
+    <Container data-testid="FoodName">
+      {response.data?.description || ""}
+    </Container>
+  );
 }
