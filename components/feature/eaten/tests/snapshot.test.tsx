@@ -1,9 +1,15 @@
-("use client");
+"use client";
 import React from "react";
 import { render } from "@testing-library/react";
 import { Eaten } from "../Eaten";
 
+// Mock the FoodName component
+jest.mock("../../foodName/FoodName", () => ({
+  FoodName: ({ id }: { id: number }) => <span>Food {id}</span>
+}));
+
 describe("Eaten", () => {
+
   it("matches snapshot", () => {
     const mockAtes = [
       {
@@ -20,7 +26,12 @@ describe("Eaten", () => {
       },
     ];
 
-    const { container } = render(<Eaten data={mockAtes} />);
+    const { container } = render(
+      <Eaten 
+        data={mockAtes} 
+        formatDate={(date) => date.toISOString()}
+      />
+    );
     expect(container).toMatchSnapshot();
   });
 });

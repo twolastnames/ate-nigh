@@ -4,16 +4,17 @@ import { Container } from "@mui/material";
 import { EatenTypes } from "./EatenTypes";
 import { Table } from "../../ui/table/Table";
 import { grams } from "@/util/units";
+import { FoodName } from "../foodName/FoodName";
 
 const defaultTimeFormater = (date: Date) => date.toLocaleTimeString();
 
 export function Eaten(props: EatenTypes) {
-  const headers = ["Time", "Food ID", "Amount (oz)"];
+  const headers = ["Time", "Food", "Amount (oz)"];
   const data = [...props.data]
     .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
     .map((ate) => [
       (props.formatDate || defaultTimeFormater)(new Date(ate.time)),
-      ate.foodId,
+      <FoodName id={ate.foodId} />,
       grams(ate.amount).asOunces(),
     ]);
 

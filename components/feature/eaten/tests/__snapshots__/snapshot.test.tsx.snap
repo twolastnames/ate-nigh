@@ -34,7 +34,7 @@ exports[`Eaten matches snapshot 1`] = `
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
               scope="col"
             >
-              Food ID
+              Food
             </th>
             <th
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
@@ -53,12 +53,15 @@ exports[`Eaten matches snapshot 1`] = `
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
             >
-              1:00:00 PM
+              2024-02-21T19:00:00.000Z
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
             >
-              456
+              <span>
+                Food 
+                456
+              </span>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
@@ -72,12 +75,15 @@ exports[`Eaten matches snapshot 1`] = `
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
             >
-              12:00:00 PM
+              2024-02-21T18:00:00.000Z
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
             >
-              123
+              <span>
+                Food 
+                123
+              </span>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
