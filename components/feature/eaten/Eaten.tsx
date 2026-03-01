@@ -10,7 +10,7 @@ export function Eaten(props: EatenTypes) {
   const data = [...props.data]
     .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
     .map(ate => [
-      new Date(ate.time).toLocaleString(),
+      new Date(ate.time).toLocaleTimeString(),
       ate.foodId,
       grams(ate.amount).asOunces(),
     ]);
