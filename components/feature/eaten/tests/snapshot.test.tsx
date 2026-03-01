@@ -1,13 +1,4 @@
-"use client"
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import { Eaten } from "../Eaten"
-
-test('Eaten', () => {
-    render(< Eaten />)
-    expect(screen.getByTestId("Eaten")).toMatchSnapshot()
-});
-"use client";
+("use client");
 import React from "react";
 import { render } from "@testing-library/react";
 import { Eaten } from "../Eaten";
@@ -26,10 +17,10 @@ describe("Eaten", () => {
         amount: 200,
         foodId: 456,
         time: new Date("2024-02-21T13:00:00"),
-      }
+      },
     ];
 
-    const { container } = render(<Eaten ates={mockAtes} />);
+    const { container } = render(<Eaten data={mockAtes} />);
     expect(container).toMatchSnapshot();
   });
 });

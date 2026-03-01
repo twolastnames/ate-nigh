@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Eaten matches snapshot 1`] = `
+<div>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg css-5c1adp-MuiContainer-root"
+    data-testid="Eaten"
+  >
+    <div
+      class="MuiBox-root css-1u8qly9"
+      data-testid="Table"
+    >
+      <div
+        class="MuiBox-root css-1u8qly9"
+      >
+        Items Eaten
+      </div>
+      <table
+        class="MuiTable-root css-1xwxv7r-MuiTable-root"
+      >
+        <thead
+          class="MuiTableHead-root css-1a7iywq-MuiTableHead-root"
+        >
+          <tr
+            class="MuiTableRow-root MuiTableRow-head css-1xtozoh-MuiTableRow-root"
+          >
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+              scope="col"
+            >
+              Time
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+              scope="col"
+            >
+              Food ID
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+              scope="col"
+            >
+              Amount (oz)
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="MuiTableBody-root css-gmh7jj-MuiTableBody-root"
+        >
+          <tr
+            class="MuiTableRow-root css-1xtozoh-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+            >
+              1:00:00 PM
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+            >
+              456
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+            >
+              7.054793167573913
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-1xtozoh-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+            >
+              12:00:00 PM
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+            >
+              123
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+            >
+              3.5273965837869565
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
