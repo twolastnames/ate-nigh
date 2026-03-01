@@ -1,4 +1,5 @@
 "use client";
+import { DayPicker } from "@/components/ui/dayPicker/DayPicker";
 import { Spinner } from "@/components/ui/spinner/Spinner";
 import { useAtesGet, useNutrientsGet } from "@/hooks/api";
 import { Box, styled } from "@mui/material";
@@ -11,14 +12,16 @@ const oneDay = 86400000;
 const Container = styled(Box)({});
 
 export default function Days() {
-  const [now] = useState(Date.now());
-  //const now = Date.now();
-  const daysSinceEpoche = Math.floor(now / oneDay) * oneDay;
+  const [now, setNow] = useState(new Date());
+  const daysSinceEpoche = Math.floor(now.getTime() / oneDay) * oneDay;
   const breakAt = daysSinceEpoche + breakTime;
-  const foods = useAtesGet({
-    from: new Date(breakAt),
-    to: new Date(now),
-  });
+  const foods = useAtesGet(
+    {
+      from: new Date(breakAt),
+      to: new Date(now),
+    },
+    {},
+  );
   const nutrients = useNutrientsGet({
     from: new Date(breakAt),
     to: new Date(now),
@@ -26,7 +29,8 @@ export default function Days() {
 
   return (
     <Container>
-      <div>now : {now}</div>
+      <DayPicker onChange={setNow} value={now} />
+      <div>now : {now.getTime()}</div>
       <div>Days since epoche: {daysSinceEpoche}</div>
       <div>Break At: {breakAt}</div>
       <div>
