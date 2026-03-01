@@ -1,4 +1,5 @@
 "use client";
+import { Eaten } from "@/components/feature/eaten/Eaten";
 import { DayPicker } from "@/components/ui/dayPicker/DayPicker";
 import { Spinner } from "@/components/ui/spinner/Spinner";
 import { useAtesGet, useNutrientsGet } from "@/hooks/api";
@@ -30,6 +31,10 @@ export default function Days() {
   return (
     <Container>
       <DayPicker onChange={setNow} value={now} />
+      <Eaten
+        data={foods?.data || []}
+        formatDate={(date: Date) => date.toLocaleTimeString()}
+      />
       <div>now : {now.getTime()}</div>
       <div>Days since epoche: {daysSinceEpoche}</div>
       <div>Break At: {breakAt}</div>
