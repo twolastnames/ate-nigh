@@ -27,7 +27,7 @@ export function useBaseGet<PAYLOAD, ARGS extends { [arg: string]: Stringable }>(
     stage: Stage.IDLE,
   });
 
-  const holdCall = options?.holdCall() || false;
+  const holdCall = options?.holdCall?.() || false;
   useEffect(() => {
     if (holdCall) {
       return;

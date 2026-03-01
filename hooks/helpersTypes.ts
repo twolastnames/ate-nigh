@@ -12,7 +12,7 @@ export type GetResponseInformation = {
 };
 
 export type GetOptions = {
-  holdCall: () => boolean;
+  holdCall?: () => boolean;
 };
 
 export type GetResponse<PAYLOAD> = GetResponseInformation & {

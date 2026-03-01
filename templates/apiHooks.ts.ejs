@@ -5,7 +5,7 @@
 *****************************************************/
 
 import { useBaseGet, useBasePost } from "./helpers"
-import { GetResponse, PostResponse } from "./helpersTypes"
+import { GetResponse, PostResponse, GetOptions } from "./helpersTypes"
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
@@ -23,8 +23,8 @@ export function use<%=
     aggregation.name
   %>Get(parameters: {
         <%- dumpParametersTypescript(aggregation.pipeline) %>
-    }) : GetResponse< <%= aggregation.name %>ResponseType%> > {
-  return useBaseGet('/api/<%= aggregation.name.uncapitalize() %>', parameters)
+    }, options?: GetOptions) : GetResponse< <%= aggregation.name %>ResponseType%> > {
+  return useBaseGet('/api/<%= aggregation.name.uncapitalize() %>', parameters, options)
 }
 <% } %>
 
