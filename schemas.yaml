@@ -91,7 +91,11 @@ aggregations:
           persistantId: $food.nutrients.persistantId
           name: $food.nutrients.name
           units: $food.nutrients.units
-          amount: $food.nutrients.amount
+          amount:
+            $multiply:
+              - $food.nutrients.amount
+              - $amount
+              - 0.01
       - $group:
           _id: $name
           name:

@@ -48,9 +48,10 @@ export async function GET(request: nextServer.NextRequest) {
       { $unwind: "$food.nutrients" },
       {
         $project: {
+          persistantId: "$food.nutrients.persistantId",
           name: "$food.nutrients.name",
           units: "$food.nutrients.units",
-          amount: "$food.nutrients.amount",
+          amount: { $multiply: ["$food.nutrients.amount", "$amount", 0.01] },
         },
       },
       {
