@@ -44,7 +44,7 @@ export function useAtesGet(
   return useBaseGet("/api/ates", parameters, options);
 }
 
-export type NutrientsResponseType = Array<AteType>;
+export type NutrientsResponseType = Array<NutrientType>;
 export function useNutrientsGet(
   parameters: {
     from: Date;
