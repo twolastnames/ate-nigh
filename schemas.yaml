@@ -60,7 +60,7 @@ aggregations:
   - name: Nutrients
     model: Ate
     response:
-      type: [Ate]
+      type: [Nutrient]
       require: true
     finalizer: raw
     pipeline:
@@ -88,6 +88,7 @@ aggregations:
       - $unwind: $food
       - $unwind: $food.nutrients
       - $project:
+          persistantId: $food.nutrients.persistantId
           name: $food.nutrients.name
           units: $food.nutrients.units
           amount: $food.nutrients.amount
