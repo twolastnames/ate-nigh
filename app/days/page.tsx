@@ -1,49 +1,38 @@
 "use client";
 import { Eaten } from "@/components/feature/eaten/Eaten";
+import { Nutrients } from "@/components/feature/nutrients/Nutrients";
 import { DayPicker } from "@/components/ui/dayPicker/DayPicker";
-import { Spinner } from "@/components/ui/spinner/Spinner";
-import { useAtesGet, useNutrientsGet } from "@/hooks/api";
-import { Box, styled } from "@mui/material";
+import { useAtesGet } from "@/hooks/api";
+import { fullPage } from "@/styles/stack";
+import { Container } from "@mui/material";
 import { useState } from "react";
 
 const hoursBeforeBreak = 9;
 const breakTime = hoursBeforeBreak * 3600000;
 const oneDay = 86400000;
 
-const Container = styled(Box)({});
-
 export default function Days() {
   const [now, setNow] = useState(new Date());
   const daysSinceEpoche = Math.floor(now.getTime() / oneDay) * oneDay;
   const breakAt = daysSinceEpoche + breakTime;
+  const from = new Date(breakAt);
+  const to = new Date(now);
   const foods = useAtesGet(
     {
-      from: new Date(breakAt),
-      to: new Date(now),
+      from,
+      to,
     },
     {},
   );
-  const nutrients = useNutrientsGet({
-    from: new Date(breakAt),
-    to: new Date(now),
-  });
 
   return (
-    <Container>
+    <Container sx={fullPage}>
       <DayPicker onChange={setNow} value={now} />
       <Eaten
         data={foods?.data || []}
         formatDate={(date: Date) => date.toLocaleTimeString()}
       />
-      <div>now : {now.getTime()}</div>
-      <div>Days since epoche: {daysSinceEpoche}</div>
-      <div>Break At: {breakAt}</div>
-      <div>
-        <Spinner responses={[foods, nutrients]}>
-          <pre>{JSON.stringify(foods.data, null, 4)}</pre>
-          <pre>{JSON.stringify(nutrients.data, null, 4)}</pre>
-        </Spinner>
-      </div>
+      <Nutrients from={from} to={to} />
     </Container>
   );
 }
