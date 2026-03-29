@@ -10,6 +10,7 @@ import {
   Table as MuiTable,
 } from "@mui/material";
 import { TableTypes } from "./TableTypes";
+import { hintColor } from "@/styles/fonts";
 
 const Container = styled(Box)({});
 
@@ -23,7 +24,9 @@ export function Table(props: TableTypes) {
         <TableHead>
           <TableRow>
             {props.headers.map((header, index) => (
-              <TableCell key={`head-${index}`}>{header}</TableCell>
+              <TableCell key={`head-${index}`} sx={hintColor}>
+                {header}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
